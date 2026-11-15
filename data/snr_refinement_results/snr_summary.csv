@@ -1,0 +1,4 @@
+snr_db,frames,successful_frames,failed_frames,bler,runtime_seconds,mapping_verified,csv_file
+2.25,1000,957,43,0.043,23.729804754257202,True,snr_refinement_results/ldpc_pilot_2.25dB.csv
+2.5,1000,977,23,0.023,32.08405685424805,True,snr_refinement_results/ldpc_pilot_2.50dB.csv
+2.75,1000,992,8,0.008,32.51416826248169,True,snr_refinement_results/ldpc_pilot_2.75dB.csv

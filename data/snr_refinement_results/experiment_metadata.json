@@ -1,0 +1,19 @@
+{
+    "K": 110,
+    "N": 220,
+    "code_rate": 0.5,
+    "base_graph": "BG2",
+    "num_iterations": 50,
+    "batch_size_per_snr": 1000,
+    "snr_values_db": [
+        2.25,
+        2.5,
+        2.75
+    ],
+    "base_seed": 42,
+    "modulation": "BPSK",
+    "channel": "AWGN",
+    "decoder": "Sionna LDPC5GDecoder",
+    "posterior_convention": "P(bit=1) = sigmoid(-internal_LLR)",
+    "iteration_zero_excluded": true
+}

@@ -1,0 +1,147 @@
+
+# ==========================================
+# PYTHON
+# ==========================================
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled extensions
+*.so
+*.pyd
+
+# Distribution and packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+virtualenv/
+
+# Python testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Type checking and linting
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ==========================================
+# IDE AND EDITORS
+# ==========================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# ENVIRONMENT AND SECRETS
+# ==========================================
+
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.venv
+.venv-sionna
+
+# ==========================================
+# LOGS AND TEMPORARY FILES
+# ==========================================
+
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+
+# ==========================================
+# DATASETS - LARGE GENERATED CSV FILES
+# ==========================================
+
+# Ignore all generated dataset CSV files
+/data/**/*.csv
+
+# Keep lightweight experiment summaries and metadata
+!/data/final_dataset/snr_summary.csv
+!/data/final_dataset/split_failure_summary.csv
+!/data/final_dataset/iteration_statistics.csv
+!/data/final_dataset/frame_split_manifest.csv
+
+# Ignore compressed dataset archives
+/data/**/*.zip
+/data/**/*.7z
+/data/**/*.tar
+/data/**/*.tar.gz
+/data/**/*.gz
+
+# Ignore NumPy and PyTorch generated data
+/data/**/*.npy
+/data/**/*.npz
+/data/**/*.pt
+/data/**/*.pth
+/data/**/*.pkl
+/data/**/*.pickle
+
+# Ignore Parquet and other generated datasets
+/data/**/*.parquet
+/data/**/*.feather
+/data/**/*.h5
+/data/**/*.hdf5
+
+# Ignore generated model checkpoints
+/checkpoints/
+/models/
+*.ckpt
+*.model
+
+# ==========================================
+# EXPERIMENT OUTPUTS
+# ==========================================
+
+# Ignore generated plots and figures
+/outputs/
+/results/
+/figures/
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+
+# ==========================================
+# OPERATING SYSTEM
+# ==========================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+# Generated pilot and diagnostic datasets
+/src/ldpc_pilot_*.csv
+/src/ldpc_pilot_dataset.csv
+/src/residual_error_test.csv
+# Intermediate SNR refinement datasets
+/data/snr_refinement_results/*.csv
+!/data/snr_refinement_results/snr_summary.csv

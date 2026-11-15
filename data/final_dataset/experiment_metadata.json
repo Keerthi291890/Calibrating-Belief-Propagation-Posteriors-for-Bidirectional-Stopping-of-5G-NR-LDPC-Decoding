@@ -1,0 +1,51 @@
+{
+    "project": "Calibrating Belief-Propagation Posteriors for Bidirectional Stopping of 5G NR LDPC Decoding",
+    "configuration": {
+        "K": 110,
+        "N": 220,
+        "code_rate": 0.5,
+        "base_graph": "BG2",
+        "lifting_factor": 20,
+        "num_iterations": 50,
+        "frames_per_snr": 10000,
+        "batch_size": 200,
+        "snr_values_db": [
+            2.25,
+            2.5,
+            2.75
+        ],
+        "modulation": "BPSK",
+        "channel": "AWGN",
+        "decoder": "Sionna LDPC5GDecoder",
+        "device": "cpu"
+    },
+    "noise_model": {
+        "ebno_definition": "Eb/N0",
+        "noise_variance_formula": "1 / (2 * code_rate * 10**(EbNo_dB/10))",
+        "bpsk_mapping": {
+            "bit_0": "+1",
+            "bit_1": "-1"
+        }
+    },
+    "posterior": {
+        "internal_llr": "log(P(bit=0)/P(bit=1))",
+        "probability_bit_1": "sigmoid(-internal_llr)",
+        "residual_error": "1 - product(max(p_i, 1-p_i))"
+    },
+    "labels": {
+        "current_error": "1 if any information bit is incorrect at the current iteration",
+        "final_failure": "1 if any information bit is incorrect after 50 BP iterations"
+    },
+    "splits": {
+        "train": 0.7,
+        "validation": 0.15,
+        "test": 0.15,
+        "split_unit": "frame"
+    },
+    "seeds": {
+        "base_seed": 2026
+    },
+    "iteration_zero_excluded": true,
+    "posterior_columns": 110,
+    "original_bit_columns": 110
+}
