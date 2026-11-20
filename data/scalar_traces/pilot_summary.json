@@ -1,0 +1,9 @@
+{
+  "snr_db": 2.0,
+  "frames": 5000,
+  "failed_frames": 326,
+  "bler": 0.0652,
+  "test_stream": true,
+  "note": "These are the first 5,000 frames of the final 2.00 dB test stream; the final test stage deterministically regenerates them.",
+  "generated_at_utc": "2026-11-20T10:06:03.722497+00:00"
+}

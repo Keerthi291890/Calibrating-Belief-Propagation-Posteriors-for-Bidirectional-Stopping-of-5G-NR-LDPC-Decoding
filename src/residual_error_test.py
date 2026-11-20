@@ -15,7 +15,8 @@ NUM_ITER = 50
 EBNO_DB = 3.0
 
 device = "cpu"
-torch.manual_seed(42)
+SEED = 42 + int(EBNO_DB * 100)
+torch.manual_seed(SEED)     
 
 # --------------------------------------------------
 # 2. Create encoder and decoder
