@@ -278,6 +278,11 @@ class LogisticCal:
 
     def fit(self, df: pd.DataFrame, y):
         X = df[self.features].to_numpy(float)
+        y = np.asarray(y)
+        if len(np.unique(y)) < 2:                      # degenerate subset: constant probability
+            self.w = np.zeros(X.shape[1]); pbar = float(np.clip(y.mean(), 1e-6, 1 - 1e-6))
+            self.b = float(np.log(pbar / (1 - pbar)))
+            return self
         self.mu, self.sd = X.mean(0), X.std(0) + 1e-12
         m = LogisticRegression(C=1e6, max_iter=5000)
         m.fit((X - self.mu) / self.sd, y)
@@ -326,9 +331,28 @@ class IsotonicCal:
         return c
 
 
+class IdentityRaw:
+    """No calibration: q = raw r (used when raw is not beaten on validation)."""
+    features = ["log_r"]
+
+    def fit(self, df, y):
+        return self
+
+    def predict(self, df):
+        return np.clip(df["r_stable"].to_numpy(float), 0.0, 1.0)
+
+    def to_dict(self, **meta):
+        return {"method": "identity_raw_r", "features": ["log_r"], **meta}
+
+    @staticmethod
+    def from_dict(d):
+        return IdentityRaw()
+
+
 def load_calibrator(path):
     d = json.load(open(path, encoding="utf-8"))
-    return (LogisticCal if d["method"] == "logistic" else IsotonicCal).from_dict(d)
+    cls = {"logistic": LogisticCal, "isotonic": IsotonicCal, "identity_raw_r": IdentityRaw}[d["method"]]
+    return cls.from_dict(d)
 
 
 def save_calibrator(cal, path, repo_root, fit_split, **meta):
