@@ -1,504 +1,505 @@
 {
-  "project": "Calibrating Belief-Propagation Posteriors for Bidirectional Stopping of 5G NR LDPC Decoding",
-  "base_seed": 20261120,
-  "batch_size": 1000,
-  "snr_values_db": [
-    2.0,
-    2.25,
-    2.5,
-    2.75
-  ],
-  "split_sizes": {
-    "2.00": {
-      "train": 10000,
-      "validation": 5000,
-      "test": 10000
-    },
-    "2.25": {
-      "train": 15000,
-      "validation": 8000,
-      "test": 20000
-    },
-    "2.50": {
-      "train": 20000,
-      "validation": 15000,
-      "test": 40000
-    },
-    "2.75": {
-      "train": 30000,
-      "validation": 25000,
-      "test": 50000
-    }
-  },
-  "split_codes": {
-    "train": 0,
-    "validation": 1,
-    "test": 2,
-    "mismatch": 3
-  },
-  "frame_id_formula": "split_code*10000000 + batch_index*1000 + i",
-  "seed_sequence": "[BASE_SEED, round(snr_db*100), split_code, batch_index]",
-  "code": {
-    "K": 110,
-    "N": 220,
-    "code_rate": 0.5,
-    "base_graph": "bg2",
-    "lifting_factor": 20,
-    "modulation": "BPSK: 0 -> +1, 1 -> -1",
-    "channel": "AWGN"
-  },
-  "decoder": {
-    "name": "Sionna LDPC5GDecoder",
-    "num_iterations": 50,
-    "return_infobits": true,
-    "hard_out": false,
-    "device": "cpu",
-    "H_source": "decoder._pcm",
-    "H_shape": [
-      150,
-      350
+    "project": "Calibrating Belief-Propagation Posteriors for Bidirectional Stopping of 5G NR LDPC Decoding",
+    "base_seed": 20261120,
+    "batch_size": 1000,
+    "snr_values_db": [
+        2.0,
+        2.25,
+        2.5,
+        2.75
     ],
-    "H_format": "SciPy CSR",
-    "LLR_convention": "log(P(bit=0)/P(bit=1)); negative means bit 1",
-    "llr_max": 20.0,
-    "llr_max_attribute": "llr_max"
-  },
-  "noise_model": {
-    "ebno_definition": "Eb/N0",
-    "variance_formula": "1 / (2 * code_rate * 10**(EbNo_dB/10))",
-    "mismatch_assumed_variance": "sigma2_true * 10**(delta_db/10)",
-    "decoder_logits": "-2*y/assumed_sigma2"
-  },
-  "trace_schema": {
-    "per_iteration_shape": [
-      1000,
-      50
+    "split_sizes": {
+        "2.00": {
+            "train": 10000,
+            "validation": 5000,
+            "test": 10000
+        },
+        "2.25": {
+            "train": 15000,
+            "validation": 8000,
+            "test": 20000
+        },
+        "2.50": {
+            "train": 20000,
+            "validation": 15000,
+            "test": 40000
+        },
+        "2.75": {
+            "train": 30000,
+            "validation": 25000,
+            "test": 50000
+        }
+    },
+    "split_codes": {
+        "train": 0,
+        "validation": 1,
+        "test": 2,
+        "mismatch": 3
+    },
+    "frame_id_formula": "split_code*10000000 + batch_index*1000 + i",
+    "seed_sequence": "[BASE_SEED, round(snr_db*100), split_code, batch_index]",
+    "code": {
+        "K": 110,
+        "N": 220,
+        "code_rate": 0.5,
+        "base_graph": "bg2",
+        "lifting_factor": 20,
+        "modulation": "BPSK: 0 -> +1, 1 -> -1",
+        "channel": "AWGN"
+    },
+    "decoder": {
+        "name": "Sionna LDPC5GDecoder",
+        "num_iterations": 50,
+        "return_infobits": true,
+        "hard_out": false,
+        "device": "cpu",
+        "H_source": "decoder._pcm",
+        "H_shape": [
+            150,
+            350
+        ],
+        "H_format": "SciPy CSR",
+        "LLR_convention": "log(P(bit=0)/P(bit=1)); negative means bit 1",
+        "llr_max": 20.0,
+        "llr_max_attribute": "llr_max",
+        "H_nnz": 1100
+    },
+    "noise_model": {
+        "ebno_definition": "Eb/N0",
+        "variance_formula": "1 / (2 * code_rate * 10**(EbNo_dB/10))",
+        "mismatch_assumed_variance": "sigma2_true * 10**(delta_db/10)",
+        "decoder_logits": "-2*y/assumed_sigma2"
+    },
+    "trace_schema": {
+        "per_iteration_shape": [
+            1000,
+            50
+        ],
+        "fields": [
+            "frame_id",
+            "snr",
+            "seed_key",
+            "final_failure",
+            "log_r",
+            "S",
+            "min_abs",
+            "mean_abs",
+            "mean_ent",
+            "info_err",
+            "cur_err",
+            "stored_r",
+            "syndrome_weight"
+        ],
+        "iteration_indices": "1..50; iteration 0 excluded",
+        "no_raw_llrs_or_true_bits_saved": true
+    },
+    "mismatch": {
+        "deltas_db": [
+            -3,
+            -2,
+            -1,
+            1,
+            2,
+            3
+        ],
+        "test_frame_counts": {
+            "2.0": 5000,
+            "2.25": 10000,
+            "2.5": 20000
+        },
+        "uses_same_test_bits_noise_and_frame_ids": true
+    },
+    "provenance": {
+        "git_hash": "38ec0eb",
+        "sionna_version": "unknown",
+        "torch_version": "2.15.0+cpu",
+        "numpy_version": "2.5.4",
+        "scipy_version": "1.18.1",
+        "generation_time_utc": "2026-11-20T11:24:02.934873+00:00",
+        "generator": "generate_scalar_traces.py"
+    },
+    "pilot": {
+        "snr_db": 2.0,
+        "frames": 5000,
+        "failed_frames": 326,
+        "bler": 0.0652,
+        "test_stream": true,
+        "note": "These are the first 5,000 frames of the final 2.00 dB test stream; the final test stage deterministically regenerates them.",
+        "generated_at_utc": "2026-11-20T10:06:03.722497+00:00"
+    },
+    "file_summaries": [
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.00.npz",
+            "split": "train",
+            "snr_db": 2.0,
+            "frames": 10000,
+            "failed_frames": 626,
+            "bler": 0.0626,
+            "runtime_seconds": 101.93535256385803
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.00.npz",
+            "split": "validation",
+            "snr_db": 2.0,
+            "frames": 5000,
+            "failed_frames": 305,
+            "bler": 0.061,
+            "runtime_seconds": 45.55667853355408
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.25.npz",
+            "split": "train",
+            "snr_db": 2.25,
+            "frames": 15000,
+            "failed_frames": 516,
+            "bler": 0.0344,
+            "runtime_seconds": 154.6292586326599
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.25.npz",
+            "split": "validation",
+            "snr_db": 2.25,
+            "frames": 8000,
+            "failed_frames": 270,
+            "bler": 0.03375,
+            "runtime_seconds": 59.806270599365234
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.50.npz",
+            "split": "train",
+            "snr_db": 2.5,
+            "frames": 20000,
+            "failed_frames": 267,
+            "bler": 0.01335,
+            "runtime_seconds": 180.07916975021362
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.50.npz",
+            "split": "validation",
+            "snr_db": 2.5,
+            "frames": 15000,
+            "failed_frames": 209,
+            "bler": 0.013933333333333334,
+            "runtime_seconds": 119.099942445755
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.75.npz",
+            "split": "train",
+            "snr_db": 2.75,
+            "frames": 30000,
+            "failed_frames": 186,
+            "bler": 0.0062,
+            "runtime_seconds": 243.0402431488037
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.75.npz",
+            "split": "validation",
+            "snr_db": 2.75,
+            "frames": 25000,
+            "failed_frames": 153,
+            "bler": 0.00612,
+            "runtime_seconds": 182.0884039402008
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00.npz",
+            "split": "test",
+            "snr_db": 2.0,
+            "frames": 10000,
+            "failed_frames": 667,
+            "bler": 0.0667,
+            "runtime_seconds": 134.31580066680908
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25.npz",
+            "split": "test",
+            "snr_db": 2.25,
+            "frames": 20000,
+            "failed_frames": 625,
+            "bler": 0.03125,
+            "runtime_seconds": 184.0164017677307
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50.npz",
+            "split": "test",
+            "snr_db": 2.5,
+            "frames": 40000,
+            "failed_frames": 618,
+            "bler": 0.01545,
+            "runtime_seconds": 296.89026141166687
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.75.npz",
+            "split": "test",
+            "snr_db": 2.75,
+            "frames": 50000,
+            "failed_frames": 281,
+            "bler": 0.00562,
+            "runtime_seconds": 391.73653507232666
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta-3.npz",
+            "split": "mismatch",
+            "snr_db": 2.0,
+            "delta_db": -3,
+            "frames": 5000,
+            "failed_frames": 583,
+            "bler": 0.1166,
+            "assumed_sigma2": 0.3162277660168379,
+            "runtime_seconds": 41.446919679641724
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta-2.npz",
+            "split": "mismatch",
+            "snr_db": 2.0,
+            "delta_db": -2,
+            "frames": 5000,
+            "failed_frames": 474,
+            "bler": 0.0948,
+            "assumed_sigma2": 0.39810717055349726,
+            "runtime_seconds": 50.39528131484985
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta-1.npz",
+            "split": "mismatch",
+            "snr_db": 2.0,
+            "delta_db": -1,
+            "frames": 5000,
+            "failed_frames": 390,
+            "bler": 0.078,
+            "assumed_sigma2": 0.5011872336272722,
+            "runtime_seconds": 45.77143573760986
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta+1.npz",
+            "split": "mismatch",
+            "snr_db": 2.0,
+            "delta_db": 1,
+            "frames": 5000,
+            "failed_frames": 317,
+            "bler": 0.0634,
+            "assumed_sigma2": 0.7943282347242816,
+            "runtime_seconds": 45.726319789886475
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta+2.npz",
+            "split": "mismatch",
+            "snr_db": 2.0,
+            "delta_db": 2,
+            "frames": 5000,
+            "failed_frames": 451,
+            "bler": 0.0902,
+            "assumed_sigma2": 1.0,
+            "runtime_seconds": 47.070669651031494
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta+3.npz",
+            "split": "mismatch",
+            "snr_db": 2.0,
+            "delta_db": 3,
+            "frames": 5000,
+            "failed_frames": 1326,
+            "bler": 0.2652,
+            "assumed_sigma2": 1.258925411794167,
+            "runtime_seconds": 41.38422417640686
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta-3.npz",
+            "split": "mismatch",
+            "snr_db": 2.25,
+            "delta_db": -3,
+            "frames": 10000,
+            "failed_frames": 626,
+            "bler": 0.0626,
+            "assumed_sigma2": 0.29853826189179594,
+            "runtime_seconds": 76.69517040252686
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta-2.npz",
+            "split": "mismatch",
+            "snr_db": 2.25,
+            "delta_db": -2,
+            "frames": 10000,
+            "failed_frames": 514,
+            "bler": 0.0514,
+            "assumed_sigma2": 0.3758374042884442,
+            "runtime_seconds": 83.27489829063416
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta-1.npz",
+            "split": "mismatch",
+            "snr_db": 2.25,
+            "delta_db": -1,
+            "frames": 10000,
+            "failed_frames": 410,
+            "bler": 0.041,
+            "assumed_sigma2": 0.47315125896148047,
+            "runtime_seconds": 96.04594993591309
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta+1.npz",
+            "split": "mismatch",
+            "snr_db": 2.25,
+            "delta_db": 1,
+            "frames": 10000,
+            "failed_frames": 318,
+            "bler": 0.0318,
+            "assumed_sigma2": 0.7498942093324559,
+            "runtime_seconds": 91.18089509010315
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta+2.npz",
+            "split": "mismatch",
+            "snr_db": 2.25,
+            "delta_db": 2,
+            "frames": 10000,
+            "failed_frames": 395,
+            "bler": 0.0395,
+            "assumed_sigma2": 0.9440608762859235,
+            "runtime_seconds": 87.91130590438843
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta+3.npz",
+            "split": "mismatch",
+            "snr_db": 2.25,
+            "delta_db": 3,
+            "frames": 10000,
+            "failed_frames": 1152,
+            "bler": 0.1152,
+            "assumed_sigma2": 1.1885022274370185,
+            "runtime_seconds": 65.34807181358337
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta-3.npz",
+            "split": "mismatch",
+            "snr_db": 2.5,
+            "delta_db": -3,
+            "frames": 20000,
+            "failed_frames": 620,
+            "bler": 0.031,
+            "assumed_sigma2": 0.28183829312644537,
+            "runtime_seconds": 86.99623775482178
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta-2.npz",
+            "split": "mismatch",
+            "snr_db": 2.5,
+            "delta_db": -2,
+            "frames": 20000,
+            "failed_frames": 497,
+            "bler": 0.02485,
+            "assumed_sigma2": 0.35481338923357547,
+            "runtime_seconds": 81.1021466255188
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta-1.npz",
+            "split": "mismatch",
+            "snr_db": 2.5,
+            "delta_db": -1,
+            "frames": 20000,
+            "failed_frames": 368,
+            "bler": 0.0184,
+            "assumed_sigma2": 0.4466835921509631,
+            "runtime_seconds": 81.43542551994324
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta+1.npz",
+            "split": "mismatch",
+            "snr_db": 2.5,
+            "delta_db": 1,
+            "frames": 20000,
+            "failed_frames": 268,
+            "bler": 0.0134,
+            "assumed_sigma2": 0.7079457843841379,
+            "runtime_seconds": 80.15571594238281
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta+2.npz",
+            "split": "mismatch",
+            "snr_db": 2.5,
+            "delta_db": 2,
+            "frames": 20000,
+            "failed_frames": 317,
+            "bler": 0.01585,
+            "assumed_sigma2": 0.8912509381337456,
+            "runtime_seconds": 80.58791995048523
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta+3.npz",
+            "split": "mismatch",
+            "snr_db": 2.5,
+            "delta_db": 3,
+            "frames": 20000,
+            "failed_frames": 827,
+            "bler": 0.04135,
+            "assumed_sigma2": 1.1220184543019633,
+            "runtime_seconds": 77.96867036819458
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta-3.npz",
+            "split": "mismatch_refit",
+            "snr_db": 2.25,
+            "delta_db": -3,
+            "frames": 10000,
+            "failed_frames": 624,
+            "bler": 0.0624,
+            "assumed_sigma2": 0.29853826189179594,
+            "runtime_seconds": 50.29136848449707
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta-2.npz",
+            "split": "mismatch_refit",
+            "snr_db": 2.25,
+            "delta_db": -2,
+            "frames": 10000,
+            "failed_frames": 515,
+            "bler": 0.0515,
+            "assumed_sigma2": 0.3758374042884442,
+            "runtime_seconds": 50.20400786399841
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta-1.npz",
+            "split": "mismatch_refit",
+            "snr_db": 2.25,
+            "delta_db": -1,
+            "frames": 10000,
+            "failed_frames": 402,
+            "bler": 0.0402,
+            "assumed_sigma2": 0.47315125896148047,
+            "runtime_seconds": 45.10080695152283
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta+1.npz",
+            "split": "mismatch_refit",
+            "snr_db": 2.25,
+            "delta_db": 1,
+            "frames": 10000,
+            "failed_frames": 300,
+            "bler": 0.03,
+            "assumed_sigma2": 0.7498942093324559,
+            "runtime_seconds": 47.0531120300293
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta+2.npz",
+            "split": "mismatch_refit",
+            "snr_db": 2.25,
+            "delta_db": 2,
+            "frames": 10000,
+            "failed_frames": 389,
+            "bler": 0.0389,
+            "assumed_sigma2": 0.9440608762859235,
+            "runtime_seconds": 44.40705347061157
+        },
+        {
+            "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta+3.npz",
+            "split": "mismatch_refit",
+            "snr_db": 2.25,
+            "delta_db": 3,
+            "frames": 10000,
+            "failed_frames": 1141,
+            "bler": 0.1141,
+            "assumed_sigma2": 1.1885022274370185,
+            "runtime_seconds": 41.59933400154114
+        }
     ],
-    "fields": [
-      "frame_id",
-      "snr",
-      "seed_key",
-      "final_failure",
-      "log_r",
-      "S",
-      "min_abs",
-      "mean_abs",
-      "mean_ent",
-      "info_err",
-      "cur_err",
-      "stored_r",
-      "syndrome_weight"
-    ],
-    "iteration_indices": "1..50; iteration 0 excluded",
-    "no_raw_llrs_or_true_bits_saved": true
-  },
-  "mismatch": {
-    "deltas_db": [
-      -3,
-      -2,
-      -1,
-      1,
-      2,
-      3
-    ],
-    "test_frame_counts": {
-      "2.0": 5000,
-      "2.25": 10000,
-      "2.5": 20000
-    },
-    "uses_same_test_bits_noise_and_frame_ids": true
-  },
-  "provenance": {
-    "git_hash": "38ec0eb",
-    "sionna_version": "unknown",
-    "torch_version": "2.15.0+cpu",
-    "numpy_version": "2.5.4",
-    "scipy_version": "1.18.1",
-    "generation_time_utc": "2026-11-20T11:24:02.934873+00:00",
-    "generator": "generate_scalar_traces.py"
-  },
-  "pilot": {
-    "snr_db": 2.0,
-    "frames": 5000,
-    "failed_frames": 326,
-    "bler": 0.0652,
-    "test_stream": true,
-    "note": "These are the first 5,000 frames of the final 2.00 dB test stream; the final test stage deterministically regenerates them.",
-    "generated_at_utc": "2026-11-20T10:06:03.722497+00:00"
-  },
-  "file_summaries": [
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.00.npz",
-      "split": "train",
-      "snr_db": 2.0,
-      "frames": 10000,
-      "failed_frames": 626,
-      "bler": 0.0626,
-      "runtime_seconds": 101.93535256385803
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.00.npz",
-      "split": "validation",
-      "snr_db": 2.0,
-      "frames": 5000,
-      "failed_frames": 305,
-      "bler": 0.061,
-      "runtime_seconds": 45.55667853355408
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.25.npz",
-      "split": "train",
-      "snr_db": 2.25,
-      "frames": 15000,
-      "failed_frames": 516,
-      "bler": 0.0344,
-      "runtime_seconds": 154.6292586326599
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.25.npz",
-      "split": "validation",
-      "snr_db": 2.25,
-      "frames": 8000,
-      "failed_frames": 270,
-      "bler": 0.03375,
-      "runtime_seconds": 59.806270599365234
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.50.npz",
-      "split": "train",
-      "snr_db": 2.5,
-      "frames": 20000,
-      "failed_frames": 267,
-      "bler": 0.01335,
-      "runtime_seconds": 180.07916975021362
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.50.npz",
-      "split": "validation",
-      "snr_db": 2.5,
-      "frames": 15000,
-      "failed_frames": 209,
-      "bler": 0.013933333333333334,
-      "runtime_seconds": 119.099942445755
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/train_snr_2.75.npz",
-      "split": "train",
-      "snr_db": 2.75,
-      "frames": 30000,
-      "failed_frames": 186,
-      "bler": 0.0062,
-      "runtime_seconds": 243.0402431488037
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/dev/validation_snr_2.75.npz",
-      "split": "validation",
-      "snr_db": 2.75,
-      "frames": 25000,
-      "failed_frames": 153,
-      "bler": 0.00612,
-      "runtime_seconds": 182.0884039402008
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00.npz",
-      "split": "test",
-      "snr_db": 2.0,
-      "frames": 10000,
-      "failed_frames": 667,
-      "bler": 0.0667,
-      "runtime_seconds": 134.31580066680908
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25.npz",
-      "split": "test",
-      "snr_db": 2.25,
-      "frames": 20000,
-      "failed_frames": 625,
-      "bler": 0.03125,
-      "runtime_seconds": 184.0164017677307
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50.npz",
-      "split": "test",
-      "snr_db": 2.5,
-      "frames": 40000,
-      "failed_frames": 618,
-      "bler": 0.01545,
-      "runtime_seconds": 296.89026141166687
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.75.npz",
-      "split": "test",
-      "snr_db": 2.75,
-      "frames": 50000,
-      "failed_frames": 281,
-      "bler": 0.00562,
-      "runtime_seconds": 391.73653507232666
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta-3.npz",
-      "split": "mismatch",
-      "snr_db": 2.0,
-      "delta_db": -3,
-      "frames": 5000,
-      "failed_frames": 583,
-      "bler": 0.1166,
-      "assumed_sigma2": 0.3162277660168379,
-      "runtime_seconds": 41.446919679641724
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta-2.npz",
-      "split": "mismatch",
-      "snr_db": 2.0,
-      "delta_db": -2,
-      "frames": 5000,
-      "failed_frames": 474,
-      "bler": 0.0948,
-      "assumed_sigma2": 0.39810717055349726,
-      "runtime_seconds": 50.39528131484985
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta-1.npz",
-      "split": "mismatch",
-      "snr_db": 2.0,
-      "delta_db": -1,
-      "frames": 5000,
-      "failed_frames": 390,
-      "bler": 0.078,
-      "assumed_sigma2": 0.5011872336272722,
-      "runtime_seconds": 45.77143573760986
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta+1.npz",
-      "split": "mismatch",
-      "snr_db": 2.0,
-      "delta_db": 1,
-      "frames": 5000,
-      "failed_frames": 317,
-      "bler": 0.0634,
-      "assumed_sigma2": 0.7943282347242816,
-      "runtime_seconds": 45.726319789886475
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta+2.npz",
-      "split": "mismatch",
-      "snr_db": 2.0,
-      "delta_db": 2,
-      "frames": 5000,
-      "failed_frames": 451,
-      "bler": 0.0902,
-      "assumed_sigma2": 1.0,
-      "runtime_seconds": 47.070669651031494
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.00_delta+3.npz",
-      "split": "mismatch",
-      "snr_db": 2.0,
-      "delta_db": 3,
-      "frames": 5000,
-      "failed_frames": 1326,
-      "bler": 0.2652,
-      "assumed_sigma2": 1.258925411794167,
-      "runtime_seconds": 41.38422417640686
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta-3.npz",
-      "split": "mismatch",
-      "snr_db": 2.25,
-      "delta_db": -3,
-      "frames": 10000,
-      "failed_frames": 626,
-      "bler": 0.0626,
-      "assumed_sigma2": 0.29853826189179594,
-      "runtime_seconds": 76.69517040252686
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta-2.npz",
-      "split": "mismatch",
-      "snr_db": 2.25,
-      "delta_db": -2,
-      "frames": 10000,
-      "failed_frames": 514,
-      "bler": 0.0514,
-      "assumed_sigma2": 0.3758374042884442,
-      "runtime_seconds": 83.27489829063416
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta-1.npz",
-      "split": "mismatch",
-      "snr_db": 2.25,
-      "delta_db": -1,
-      "frames": 10000,
-      "failed_frames": 410,
-      "bler": 0.041,
-      "assumed_sigma2": 0.47315125896148047,
-      "runtime_seconds": 96.04594993591309
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta+1.npz",
-      "split": "mismatch",
-      "snr_db": 2.25,
-      "delta_db": 1,
-      "frames": 10000,
-      "failed_frames": 318,
-      "bler": 0.0318,
-      "assumed_sigma2": 0.7498942093324559,
-      "runtime_seconds": 91.18089509010315
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta+2.npz",
-      "split": "mismatch",
-      "snr_db": 2.25,
-      "delta_db": 2,
-      "frames": 10000,
-      "failed_frames": 395,
-      "bler": 0.0395,
-      "assumed_sigma2": 0.9440608762859235,
-      "runtime_seconds": 87.91130590438843
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.25_delta+3.npz",
-      "split": "mismatch",
-      "snr_db": 2.25,
-      "delta_db": 3,
-      "frames": 10000,
-      "failed_frames": 1152,
-      "bler": 0.1152,
-      "assumed_sigma2": 1.1885022274370185,
-      "runtime_seconds": 65.34807181358337
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta-3.npz",
-      "split": "mismatch",
-      "snr_db": 2.5,
-      "delta_db": -3,
-      "frames": 20000,
-      "failed_frames": 620,
-      "bler": 0.031,
-      "assumed_sigma2": 0.28183829312644537,
-      "runtime_seconds": 86.99623775482178
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta-2.npz",
-      "split": "mismatch",
-      "snr_db": 2.5,
-      "delta_db": -2,
-      "frames": 20000,
-      "failed_frames": 497,
-      "bler": 0.02485,
-      "assumed_sigma2": 0.35481338923357547,
-      "runtime_seconds": 81.1021466255188
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta-1.npz",
-      "split": "mismatch",
-      "snr_db": 2.5,
-      "delta_db": -1,
-      "frames": 20000,
-      "failed_frames": 368,
-      "bler": 0.0184,
-      "assumed_sigma2": 0.4466835921509631,
-      "runtime_seconds": 81.43542551994324
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta+1.npz",
-      "split": "mismatch",
-      "snr_db": 2.5,
-      "delta_db": 1,
-      "frames": 20000,
-      "failed_frames": 268,
-      "bler": 0.0134,
-      "assumed_sigma2": 0.7079457843841379,
-      "runtime_seconds": 80.15571594238281
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta+2.npz",
-      "split": "mismatch",
-      "snr_db": 2.5,
-      "delta_db": 2,
-      "frames": 20000,
-      "failed_frames": 317,
-      "bler": 0.01585,
-      "assumed_sigma2": 0.8912509381337456,
-      "runtime_seconds": 80.58791995048523
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/test_snr_2.50_delta+3.npz",
-      "split": "mismatch",
-      "snr_db": 2.5,
-      "delta_db": 3,
-      "frames": 20000,
-      "failed_frames": 827,
-      "bler": 0.04135,
-      "assumed_sigma2": 1.1220184543019633,
-      "runtime_seconds": 77.96867036819458
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta-3.npz",
-      "split": "mismatch_refit",
-      "snr_db": 2.25,
-      "delta_db": -3,
-      "frames": 10000,
-      "failed_frames": 624,
-      "bler": 0.0624,
-      "assumed_sigma2": 0.29853826189179594,
-      "runtime_seconds": 50.29136848449707
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta-2.npz",
-      "split": "mismatch_refit",
-      "snr_db": 2.25,
-      "delta_db": -2,
-      "frames": 10000,
-      "failed_frames": 515,
-      "bler": 0.0515,
-      "assumed_sigma2": 0.3758374042884442,
-      "runtime_seconds": 50.20400786399841
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta-1.npz",
-      "split": "mismatch_refit",
-      "snr_db": 2.25,
-      "delta_db": -1,
-      "frames": 10000,
-      "failed_frames": 402,
-      "bler": 0.0402,
-      "assumed_sigma2": 0.47315125896148047,
-      "runtime_seconds": 45.10080695152283
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta+1.npz",
-      "split": "mismatch_refit",
-      "snr_db": 2.25,
-      "delta_db": 1,
-      "frames": 10000,
-      "failed_frames": 300,
-      "bler": 0.03,
-      "assumed_sigma2": 0.7498942093324559,
-      "runtime_seconds": 47.0531120300293
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta+2.npz",
-      "split": "mismatch_refit",
-      "snr_db": 2.25,
-      "delta_db": 2,
-      "frames": 10000,
-      "failed_frames": 389,
-      "bler": 0.0389,
-      "assumed_sigma2": 0.9440608762859235,
-      "runtime_seconds": 44.40705347061157
-    },
-    {
-      "file": "/mnt/d/Calibrating-Belief-Propagation-Posteriors-for-Bidirectional-Stopping-of-5G-NR-LDPC-Decoding/data/scalar_traces/sealed_test/train_mismatch_snr_2.25_delta+3.npz",
-      "split": "mismatch_refit",
-      "snr_db": 2.25,
-      "delta_db": 3,
-      "frames": 10000,
-      "failed_frames": 1141,
-      "bler": 0.1141,
-      "assumed_sigma2": 1.1885022274370185,
-      "runtime_seconds": 41.59933400154114
-    }
-  ],
-  "sionna_version": "2.2.0"
+    "sionna_version": "2.2.0"
 }
