@@ -835,3 +835,49 @@ Preserve these metadata files alongside the generated dataset for reproducibilit
 This repository contains the simulation, scalar-trace generation, mismatch experiments and dataset-validation work for research on calibrated BP posterior estimates and bidirectional stopping of 5G NR LDPC decoding.
 
 The calibration and stopping stages use these generated traces to investigate whether posterior-derived risk estimates can support more reliable decoding decisions.
+
+## Calibration and stopping stage (Person 2) -- addendum to this README
+
+### Status update
+Completed in this stage: statistical audit of the scalar traces, posterior feature engineering, current-error and
+final-failure calibration, calibration evaluation on validation (with frame-level bootstrap), matched-channel and mismatch
+previews, tail calibration, stopping-rule module, operation-cost model, freeze/final-test protocol.
+Final test run completed once (see FINAL_RESULTS_PERSON2.md). Pending: paper sections and the cross-run reproducibility check.
+
+### Differences from the plan in section 16 above
+- The candidate `q_now = sigmoid(a log r + b)` is significantly WORSE than raw r on validation (reported as a result).
+  The calibrated models add terms (S = -log(1-r), syndrome weight, min|LLR|, iteration index) and are fitted on syndrome>0 rows,
+  the only rows where a stopping decision is still open.
+- The window-based `q_fail` is extended with the iteration index; the trajectory term alone adds little.
+
+### Additional files
+```text
+src/
+  calib_lib.py            stable features, metrics, calibrators (JSON), trace helper
+  p2_common.py            data loading (test sealed), feature table, bootstrap, evaluation helpers
+  p2_stopping.py          stopping rules, metrics, operation counts, threshold tuning
+  risk_model.py           q_now / q_fail interface
+  p2_audit.py             statistical audit of dev + refit data
+  p2_fit_dev.py           fit on train, select on validation, save models
+  p2_mismatch_dev.py      mismatch preview on the refit (training) files
+  p2_stop_preview.py      tail calibration + in-sample stopping preview on validation
+  p2_freeze.py            freeze models, code hashes, validation-tuned thresholds
+  p2_final_test.py        one-shot final evaluation (calibration, stopping, mismatch)
+  p2_paper_tables.py      paper tables/figures from the final CSVs (outputs only)
+  p2_repro_check.py       cross-run reproducibility check of the frozen calibrators
+tests/  test_calib_lib.py  test_stopping.py  make_mock_npz.py (fake data for code tests only)
+results/person2_v3/       artifacts, tables, plots, FROZEN.json, TEST_ACCESS_LOG.txt
+HANDOFF_PERSON2_TO_PERSON3.md   FINAL_RESULTS_PERSON2.md   RUN_ORDER.md   PERSON2_NOTES.md
+```
+
+### Reproduce
+```bash
+python tests/test_calib_lib.py && python tests/test_stopping.py
+python src/p2_audit.py        --data-root <root>
+python src/p2_fit_dev.py      --data-root <root>
+python src/p2_mismatch_dev.py --data-root <root>
+python src/p2_stop_preview.py --data-root <root> --n-edges <nnz of decoder._pcm>
+python src/p2_freeze.py       --data-root <root> --n-edges <nnz> --i-have-reviewed-validation
+python src/p2_final_test.py   --data-root <root>        # once
+```
+Requires one extra number from the generation environment: `dec._pcm.nnz` (for operation counts).

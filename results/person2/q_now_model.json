@@ -1,0 +1,14 @@
+{
+    "model": "logistic_regression",
+    "target": "current_error",
+    "feature": "log_residual",
+    "epsilon": 1e-12,
+    "coefficient": 2.7771970961891235,
+    "intercept": 2.4901702856759598,
+    "train_snr_values": [
+        2.25,
+        2.5,
+        2.75
+    ],
+    "fit_split": "train"
+}

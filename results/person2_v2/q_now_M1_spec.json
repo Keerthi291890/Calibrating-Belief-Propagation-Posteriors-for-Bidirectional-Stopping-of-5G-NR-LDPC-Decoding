@@ -1,0 +1,20 @@
+{
+  "method": "logistic",
+  "features": [
+    "log_r"
+  ],
+  "coefficients": [
+    3.369085113773616
+  ],
+  "intercept": 2.6718883878504087,
+  "log_r_floor": -60.0,
+  "fit_split": "train",
+  "git_hash": "unknown",
+  "target": "current_error",
+  "train_snrs": [
+    2.25,
+    2.5,
+    2.75
+  ],
+  "epsilon_note": "no clipping epsilon needed: log r from -expm1(-S) in float64"
+}

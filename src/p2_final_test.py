@@ -41,6 +41,8 @@ with open(log, "a") as f:
 pc.unlock_test(fz_path)
 
 rm = RiskModel(OUT); K, TM = rm.k, rm.t_min
+cm = ps.make_cost_model(rm, **fz["cost_model"])
+cm_sens = {c: ps.make_cost_model(rm, fz["cost_model"]["n_edges"], fz["cost_model"]["n_checks"], fz["cost_model"]["n_vn"], c) for c in ps.CX_SENSITIVITY}
 raw = {"q_now": cl.IdentityRaw(), "q_fail": cl.IdentityRaw()}
 matched = {"q_now": rm.q_now_cal, "q_fail": rm.q_fail_cal}
 pd.set_option("display.width", 230, "display.max_columns", 30)
@@ -90,11 +92,21 @@ def boot_stop(ctx, rule_params, n_boot, seed=0):
     pfs = {r: ps.per_frame(ctx, *ps.RULES[r][1](ctx, p)) for r, p in rule_params.items()}
     b2 = pfs["B2 syndrome-zero"]["t_stop"]; b5 = pfs["B5 syndrome + cap"]["t_stop"]; pc_ = pfs["P-cal both"]["t_stop"]
     rows = {}
+    ops = {r: ps.ops_arrays(ctx, pf, r, rule_params[r], cm) for r, pf in pfs.items()}
+    tot = {r: sum(o) for r, o in ops.items()}
     for r, pf in pfs.items():
         t = pf["t_stop"]
         mi = np.array([t[ix].mean() for ix in boots])
         sv = np.array([100 * (1 - t[ix].mean() / b2[ix].mean()) for ix in boots])
-        rows[r] = {"summary": ps.summarize(pf, ctx["ff"]), "mean_it_ci": (np.percentile(mi, 2.5), np.percentile(mi, 97.5)),
+        tsv = np.array([100 * (1 - tot[r][ix].mean() / tot["B2 syndrome-zero"][ix].mean()) for ix in boots])
+        sens = {}
+        for c, cmc in cm_sens.items():
+            oc = {rr: sum(ps.ops_arrays(ctx, pfs[rr], rr, rule_params[rr], cmc)) for rr in (r, "B2 syndrome-zero")}
+            sens[c] = 100 * (1 - oc[r].mean() / oc["B2 syndrome-zero"].mean())
+        rows[r] = {"ops": {"bp_ops": ops[r][0].mean(), "syndrome_ops": ops[r][1].mean(), "score_ops": ops[r][2].mean(),
+                           "total_ops": tot[r].mean()}, "total_saving": 100 * (1 - tot[r].mean() / tot["B2 syndrome-zero"].mean()),
+                   "total_saving_ci": (np.percentile(tsv, 2.5), np.percentile(tsv, 97.5)), "sens": sens,
+                   "summary": ps.summarize(pf, ctx["ff"]), "mean_it_ci": (np.percentile(mi, 2.5), np.percentile(mi, 97.5)),
                    "saving_pct": 100 * (1 - t.mean() / b2.mean()), "saving_ci": (np.percentile(sv, 2.5), np.percentile(sv, 97.5))}
     d = np.array([b5[ix].mean() - pc_[ix].mean() for ix in boots])
     return rows, (b5.mean() - pc_.mean(), np.percentile(d, 2.5), np.percentile(d, 97.5))
@@ -115,14 +127,22 @@ for s in pc.SNRS_DEFAULT:
                          "budget_met_on_test": sm["excess_events"] <= rho * fails, **sm,
                          "mean_it_lo": v["mean_it_ci"][0], "mean_it_hi": v["mean_it_ci"][1],
                          "saving_vs_B2_pct": v["saving_pct"], "saving_lo": v["saving_ci"][0], "saving_hi": v["saving_ci"][1],
+                         "fragile_budget_test": rho * fails < ps.FRAGILE_BUDGET_EVENTS,
+                         "fragile_budget_validation": bool(fz["thresholds"][f"{s:.2f}"][f"{rho:.2f}"][r].get("fragile_budget", False)), **v["ops"],
+                         "total_ops_saving_vs_B2_pct": v["total_saving"], "total_saving_lo": v["total_saving_ci"][0],
+                         "total_saving_hi": v["total_saving_ci"][1],
+                         **{f"total_saving_pct_cx{c}": v["sens"][c] for c in v["sens"]},
                          "pcal_both_faster_than_B5_by": dif[0], "diff_lo": dif[1], "diff_hi": dif[2]})
 st = pd.DataFrame(rows); st.to_csv(OUT / "final_stopping_test.csv", index=False)
-show = ["rule", "params", "feasible_on_validation", "budget_met_on_test", "mean_it", "mean_it_lo", "mean_it_hi", "false_accept", "false_abandon",
-        "undetected_per_1000", "net_bler_change", "saving_vs_B2_pct", "saving_lo", "saving_hi"]
+show = ["rule", "params", "budget_met_on_test", "mean_it", "false_accept", "false_abandon", "undetected_given_accepted", "nack_rate",
+        "net_bler_change", "saving_vs_B2_pct", "saving_lo", "saving_hi", "total_ops_saving_vs_B2_pct", "total_saving_lo", "total_saving_hi",
+        "total_saving_pct_cx3", "total_saving_pct_cx25"]
 for s in pc.SNRS_DEFAULT:
     for rho in (0.10, 0.20):
         r = st[(st.snr == s) & (st.rho == rho)]
-        print(f"\n--- test {s:.2f} dB, rho={rho:.0%}: {r.failing_frames.iloc[0]} failing frames, budget {r.budget_events.iloc[0]:.1f} events ---")
+        frag = ("  ** FRAGILE on validation (thresholds tuned on < %d events) **" % ps.FRAGILE_BUDGET_EVENTS) if r.fragile_budget_validation.iloc[0] else ""
+        frag += "  ** FRAGILE on test **" if r.fragile_budget_test.iloc[0] else ""
+        print(f"\n--- test {s:.2f} dB, rho={rho:.0%}: {r.failing_frames.iloc[0]} failing frames, budget {r.budget_events.iloc[0]:.1f} events{frag} ---")
         print(r[show].round(3).to_string(index=False))
         print(f"    P-cal both faster than B5 by {r.pcal_both_faster_than_B5_by.iloc[0]:.3f} iterations "
               f"[{r.diff_lo.iloc[0]:.3f}, {r.diff_hi.iloc[0]:.3f}] (positive = P-cal better)")
@@ -152,8 +172,10 @@ for s in (2.00, 2.25, 2.50):
                 if vname == "refit" and not r.startswith("P-cal"):
                     continue
                 p = fz["thresholds"][f"{s:.2f}"]["0.10"][r]["params"]
-                sm = ps.summarize(ps.per_frame(c, *ps.RULES[r][1](c, p)), c["ff"])
-                rows.append({"snr": s, "delta": dl, "calibrators": vname, "rule": r, "params": str(p), "failing_frames_at_delta": fails,
+                pf_ = ps.per_frame(c, *ps.RULES[r][1](c, p)); sm = ps.summarize(pf_, c["ff"])
+                op_ = ps.ops_summary(c, pf_, r, p, cm)
+                b2o = ps.ops_summary(c, ps.per_frame(c, *ps.RULES["B2 syndrome-zero"][1](c, {})), "B2 syndrome-zero", {}, cm)["total_ops"]
+                rows.append({"snr": s, "delta": dl, **op_, "total_ops_saving_vs_B2_same_delta_pct": 100 * (1 - op_["total_ops"] / b2o), "calibrators": vname, "rule": r, "params": str(p), "failing_frames_at_delta": fails,
                              "excess_vs_budget": f"{sm['excess_events']}/{0.10 * fails:.1f}", "budget_met": sm["excess_events"] <= 0.10 * fails,
                              **sm, "saving_vs_B2_same_delta_pct": 100 * (1 - sm["mean_it"] / base)})
 ms = pd.DataFrame(rows); ms.to_csv(OUT / "final_stopping_mismatch.csv", index=False)

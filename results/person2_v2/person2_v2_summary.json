@@ -1,0 +1,73 @@
+{
+  "saturated_row_fraction": 0.7979688888888888,
+  "selected_k": 3,
+  "t_eval_min": 5,
+  "q_now_val_all_t": {
+    "RAW r (stable)": {
+      "region": "all t",
+      "n": 225000,
+      "prevalence": 0.12264,
+      "brier": 0.009569,
+      "logloss": 0.031133,
+      "ece_eqmass20": 0.006027,
+      "ece_fixed10": 0.006027,
+      "auc": 0.998768,
+      "pr_auc": 0.991011
+    },
+    "RAW r (stored float32 column)": {
+      "region": "all t",
+      "n": 225000,
+      "prevalence": 0.12264,
+      "brier": 0.009569,
+      "logloss": 0.031133,
+      "ece_eqmass20": 0.006027,
+      "ece_fixed10": 0.006027,
+      "auc": 0.998768,
+      "pr_auc": 0.991011
+    },
+    "M1_spec_logit(log r)": {
+      "region": "all t",
+      "n": 225000,
+      "prevalence": 0.12264,
+      "brier": 0.010374,
+      "logloss": 0.037008,
+      "ece_eqmass20": 0.011342,
+      "ece_fixed10": 0.010467,
+      "auc": 0.998768,
+      "pr_auc": 0.991011
+    },
+    "M2_logit(log r, log(1-r))": {
+      "region": "all t",
+      "n": 225000,
+      "prevalence": 0.12264,
+      "brier": 0.00906,
+      "logloss": 0.0296,
+      "ece_eqmass20": 0.001138,
+      "ece_fixed10": 0.002489,
+      "auc": 0.998768,
+      "pr_auc": 0.991011
+    },
+    "M3_isotonic(log r) [A2]": {
+      "region": "all t",
+      "n": 225000,
+      "prevalence": 0.12264,
+      "brier": 0.008966,
+      "logloss": 0.02917,
+      "ece_eqmass20": 0.000264,
+      "ece_fixed10": 0.000625,
+      "auc": 0.998764,
+      "pr_auc": 0.990564
+    },
+    "M4_per-SNR M1": {
+      "region": "all t",
+      "n": 225000,
+      "prevalence": 0.12264,
+      "brier": 0.010381,
+      "logloss": 0.036969,
+      "ece_eqmass20": 0.010822,
+      "ece_fixed10": 0.010359,
+      "auc": 0.998446,
+      "pr_auc": 0.986189
+    }
+  }
+}

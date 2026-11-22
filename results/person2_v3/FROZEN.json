@@ -1,0 +1,1313 @@
+{
+  "frozen_utc": "2026-11-22T05:05:11.825165+00:00",
+  "git_hash": "71e9299",
+  "sha256": {
+    "q_now.json": "cfd9934219b86161f1d53bd30c6abf7498291550ab1974d03619130bb7628078",
+    "q_fail.json": "13155e33267c2f28037459285094ca589e52dcac2d8157f036bb03dfa2fed452",
+    "model_card.json": "93a47cb926aacac3075bac47c0690d8bc3a7438a862626c61eee0f167bb9e6b5",
+    "calib_lib.py": "5dd26d13a2d0a1e6d0bbac25bccd77ac31a81c31d72773e4b4a81186235c3ead",
+    "p2_common.py": "c86491da4229cfeb7bf1d4df5e403e30d50377562812bf06777a53bd5069012f",
+    "risk_model.py": "b084b1120c79a0f47647f3eae3933ffca5986732ed9ab589036b6c5adf507517",
+    "p2_stopping.py": "2ed738c3277a86a508861a1800212e4c65cda7f372535197b797e8d98bd0a925",
+    "p2_fit_dev.py": "37d65028b583269cdc42014c1ebd721cd2d958ec63e53ed861b7571854ec4b0b",
+    "p2_final_test.py": "a03a77ccaf26004990265c5786eb3652f4cd66b8c9c6bc4a1132cb94d62d9533"
+  },
+  "thresholds": {
+    "2.00": {
+      "0.05": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3696,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.4832,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 3
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2014,
+          "val_excess": 13
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 45
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.0594,
+          "val_excess": 10
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3222,
+          "val_excess": 1
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2246,
+          "val_excess": 11
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3696,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.1,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2246,
+          "val_excess": 11
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2494,
+          "val_excess": 2
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.4704,
+          "val_excess": 15
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.01,
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.4442,
+          "val_excess": 15
+        }
+      },
+      "0.10": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3696,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.4832,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 3
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2014,
+          "val_excess": 13
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 35
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.4126,
+          "val_excess": 27
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3222,
+          "val_excess": 1
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2246,
+          "val_excess": 11
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3696,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.1,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2246,
+          "val_excess": 11
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.073,
+          "val_excess": 17
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.0812,
+          "val_excess": 27
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.017,
+          "val_excess": 29
+        }
+      },
+      "0.20": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3696,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.4832,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 3
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.2014,
+          "val_excess": 13
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 30
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.072,
+          "val_excess": 44
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3222,
+          "val_excess": 1
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.2
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.1376,
+          "val_excess": 42
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.3696,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.2,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 11.1376,
+          "val_excess": 42
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.2
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 10.8706,
+          "val_excess": 55
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.8
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.6804,
+          "val_excess": 41
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.1,
+            "eps_b": 0.8
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.4878,
+          "val_excess": 55
+        }
+      }
+    },
+    "2.25": {
+      "0.05": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.307375,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.46925,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 5
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.288,
+          "val_excess": 0
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 45
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.136375,
+          "val_excess": 11
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.28375,
+          "val_excess": 1
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.267875,
+          "val_excess": 2
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.307375,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.267875,
+          "val_excess": 2
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.230625,
+          "val_excess": 2
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.03675,
+          "val_excess": 2
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.972125,
+          "val_excess": 3
+        }
+      },
+      "0.10": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.307375,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.46925,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 3
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.1775,
+          "val_excess": 21
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 40
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.95975,
+          "val_excess": 22
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.28375,
+          "val_excess": 1
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.193625,
+          "val_excess": 18
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.307375,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.1,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.193625,
+          "val_excess": 18
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.085625,
+          "val_excess": 21
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.793125,
+          "val_excess": 16
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.733125,
+          "val_excess": 17
+        }
+      },
+      "0.20": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.307375,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.46925,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 3
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.1775,
+          "val_excess": 21
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 30
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.577875,
+          "val_excess": 53
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.28375,
+          "val_excess": 1
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.193625,
+          "val_excess": 18
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.307375,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.1,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.193625,
+          "val_excess": 18
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 9.085625,
+          "val_excess": 21
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.59025,
+          "val_excess": 34
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.1,
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 8.396875,
+          "val_excess": 53
+        }
+      }
+    },
+    "2.50": {
+      "0.05": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.588333333333333,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.7805333333333335,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 5
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.559466666666666,
+          "val_excess": 5
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 48
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.560333333333333,
+          "val_excess": 7
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.553133333333333,
+          "val_excess": 6
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.01
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.564933333333333,
+          "val_excess": 3
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.588333333333333,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.01,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.564933333333333,
+          "val_excess": 3
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.5162,
+          "val_excess": 2
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.480466666666667,
+          "val_excess": 2
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.414266666666666,
+          "val_excess": 4
+        }
+      },
+      "0.10": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.588333333333333,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.7805333333333335,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 5
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.559466666666666,
+          "val_excess": 5
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 45
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.517066666666667,
+          "val_excess": 13
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.553133333333333,
+          "val_excess": 6
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.5352,
+          "val_excess": 11
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.588333333333333,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.5352,
+          "val_excess": 11
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.5162,
+          "val_excess": 2
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.3684666666666665,
+          "val_excess": 20
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.01,
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.354266666666667,
+          "val_excess": 20
+        }
+      },
+      "0.20": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.588333333333333,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.7805333333333335,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 5
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.559466666666666,
+          "val_excess": 5
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 35
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.363533333333334,
+          "val_excess": 34
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.553133333333333,
+          "val_excess": 6
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.5352,
+          "val_excess": 11
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.588333333333333,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.5352,
+          "val_excess": 11
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.1
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.353466666666667,
+          "val_excess": 31
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.2782,
+          "val_excess": 32
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 7.220666666666666,
+          "val_excess": 34
+        }
+      }
+    },
+    "2.75": {
+      "0.05": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.53404,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 5.76704,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 8
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.52828,
+          "val_excess": 1
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 45
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.5034,
+          "val_excess": 4
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.49052,
+          "val_excess": 7
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.01
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.50356,
+          "val_excess": 6
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.53404,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.01,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.50356,
+          "val_excess": 6
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.45752,
+          "val_excess": 5
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.48388,
+          "val_excess": 1
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": true,
+          "val_mean_it": 6.41376,
+          "val_excess": 6
+        }
+      },
+      "0.10": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.53404,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 5.76704,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 5
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.4972,
+          "val_excess": 8
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 40
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.47128,
+          "val_excess": 14
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.49052,
+          "val_excess": 7
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.01
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.50356,
+          "val_excess": 6
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.53404,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.01,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.50356,
+          "val_excess": 6
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.45752,
+          "val_excess": 5
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.43436,
+          "val_excess": 15
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.98
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.41376,
+          "val_excess": 6
+        }
+      },
+      "0.20": {
+        "B1 fixed 50": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 50.0,
+          "val_excess": 0
+        },
+        "B2 syndrome-zero": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.53404,
+          "val_excess": 0
+        },
+        "B4 ideal info-CRC (ceiling)": {
+          "params": {},
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 5.76704,
+          "val_excess": 0
+        },
+        "B3 min|LLR| accept": {
+          "params": {
+            "tau": 5
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.4972,
+          "val_excess": 8
+        },
+        "B5 syndrome + cap": {
+          "params": {
+            "cap": 35
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.43628,
+          "val_excess": 30
+        },
+        "A1 mean-entropy accept": {
+          "params": {
+            "tau": 0.001
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.49052,
+          "val_excess": 7
+        },
+        "P-raw accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.4714,
+          "val_excess": 18
+        },
+        "P-raw abandon-only": {
+          "params": {
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.53404,
+          "val_excess": 0
+        },
+        "P-raw both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 2.0
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.4714,
+          "val_excess": 18
+        },
+        "P-cal accept-only": {
+          "params": {
+            "eps_a": 0.03
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.45752,
+          "val_excess": 5
+        },
+        "P-cal abandon-only": {
+          "params": {
+            "eps_b": 0.9
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.39428,
+          "val_excess": 28
+        },
+        "P-cal both": {
+          "params": {
+            "eps_a": 0.03,
+            "eps_b": 0.95
+          },
+          "feasible": true,
+          "fragile_budget": false,
+          "val_mean_it": 6.36772,
+          "val_excess": 20
+        }
+      }
+    }
+  },
+  "cost_model": {
+    "n_edges": 1100,
+    "n_checks": 150,
+    "n_vn": 350,
+    "cx": 10
+  },
+  "selection": {
+    "selected_q_now": "M6c +lsyn,min_abs [syn>0]",
+    "selected_q_fail": "F5 +t,lsyn,min_abs,dlsyn [syn>0]",
+    "best_q_now": "M6c +lsyn,min_abs [syn>0]",
+    "best_q_fail": "F5 +t,lsyn,min_abs,dlsyn [syn>0]",
+    "k": 2,
+    "calibration_fit_and_eval_wall_seconds": 188.8,
+    "train_rows": 3750000,
+    "train_frames": 75000
+  }
+}

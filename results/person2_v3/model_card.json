@@ -1,0 +1,19 @@
+{
+  "q_now": {
+    "file": "q_now.json",
+    "name": "M6c +lsyn,min_abs [syn>0]",
+    "fit_region": "syn>0",
+    "valid_where": "syndrome_weight > 0"
+  },
+  "q_fail": {
+    "file": "q_fail.json",
+    "name": "F5 +t,lsyn,min_abs,dlsyn [syn>0]",
+    "fit_region": "syn>0",
+    "k": 2,
+    "t_min": 5,
+    "valid_where": "syndrome_weight > 0 and iteration >= 5"
+  },
+  "inputs": "scalar traces (log_r, S, min_abs, syndrome_weight); never info_err, cur_err, final_failure",
+  "supported": "AWGN, BPSK, 5G NR BG2 K=110 N=220, decoder 50 iterations, SNR 2.0-2.75 dB (matched)",
+  "note": "outside the valid region the calibrators are extrapolating; stopping rules already accept at syndrome 0"
+}

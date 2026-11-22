@@ -11,6 +11,7 @@ Key design (new, because syndrome weight is now available):
 """
 import argparse
 import json
+import time
 from pathlib import Path
 
 import matplotlib
@@ -42,6 +43,7 @@ print(f"data root: {root}\nout: {OUT}")
 tr_d = pc.load_group(root, "train", SNRS)
 va_d = pc.load_group(root, "validation", SNRS)
 tr, va = pc.table(tr_d, KS), pc.table(va_d, KS)
+_T0 = time.perf_counter()
 nf_va = len(va_d["frame_id"]); T = cl.T
 print(f"train frames {len(tr_d['frame_id']):,} (failing {int(tr_d['final_failure'].sum())}) | "
       f"validation frames {nf_va:,} (failing {int(va_d['final_failure'].sum())})")
@@ -221,6 +223,8 @@ card = {"q_now": {"file": "q_now.json", "name": sel_now, "fit_region": reg_now, 
         "supported": "AWGN, BPSK, 5G NR BG2 K=110 N=220, decoder 50 iterations, SNR 2.0-2.75 dB (matched)",
         "note": "outside the valid region the calibrators are extrapolating; stopping rules already accept at syndrome 0"}
 json.dump(card, open(OUT / "model_card.json", "w", encoding="utf-8"), indent=2)
-json.dump({"selected_q_now": sel_now, "selected_q_fail": sel_f, "best_q_now": best_now, "best_q_fail": best_f, "k": best_k},
+json.dump({"selected_q_now": sel_now, "selected_q_fail": sel_f, "best_q_now": best_now, "best_q_fail": best_f, "k": best_k,
+           "calibration_fit_and_eval_wall_seconds": round(time.perf_counter() - _T0, 1),
+           "train_rows": int(len(tr)), "train_frames": int(len(tr_d["frame_id"]))},
           open(OUT / "selection_summary.json", "w", encoding="utf-8"), indent=2)
 print(f"\nSaved artifacts and model_card.json in {OUT}\nTest data was NOT opened.")

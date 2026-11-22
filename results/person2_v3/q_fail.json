@@ -1,0 +1,34 @@
+{
+  "method": "logistic",
+  "features": [
+    "log_r",
+    "dlog_k2",
+    "t",
+    "lsyn",
+    "min_abs",
+    "dlsyn_k2"
+  ],
+  "coefficients": [
+    0.06559931379350575,
+    0.42296197492347665,
+    0.1398321146965902,
+    0.8261639445475412,
+    -0.06737398436940294,
+    0.8937832509286608
+  ],
+  "intercept": -5.082152473946077,
+  "log_r_floor": -60.0,
+  "fit_split": "train",
+  "git_hash": "71e9299",
+  "target": "final_failure",
+  "model_name": "F5 +t,lsyn,min_abs,dlsyn [syn>0]",
+  "fit_region": "syn>0",
+  "k": 2,
+  "train_snrs": [
+    2.0,
+    2.25,
+    2.5,
+    2.75
+  ],
+  "t_min": 5
+}

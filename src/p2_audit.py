@@ -39,6 +39,8 @@ for kind, s, dl in files:
     ref = np.log(np.maximum(-np.expm1(-d["S"].astype(float)), 1e-300))
     ok = np.abs(d["log_r"] - ref) < 1e-6 * np.maximum(1, np.abs(ref)) + 1e-8
     check(ok.mean() > 0.999, f"{tag}: log_r agrees with log(-expm1(-S)) on {ok.mean():.4%} of cells")
+    ent_ok = d["mean_ent"].astype(float) >= d["S"].astype(float) / cl.K - 1e-6
+    check(ent_ok.mean() > 0.999, f"{tag}: mean_ent >= S/110 on {ent_ok.mean():.4%} of cells (consistent with info-bit entropy)")
     check(len(np.unique(d["frame_id"])) == n, f"{tag}: unique frame_id")
     ids[tag] = set(d["frame_id"].tolist())
     ff = d["final_failure"].astype(bool); syn50 = d["syndrome_weight"][:, -1]

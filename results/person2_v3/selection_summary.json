@@ -1,0 +1,10 @@
+{
+  "selected_q_now": "M6c +lsyn,min_abs [syn>0]",
+  "selected_q_fail": "F5 +t,lsyn,min_abs,dlsyn [syn>0]",
+  "best_q_now": "M6c +lsyn,min_abs [syn>0]",
+  "best_q_fail": "F5 +t,lsyn,min_abs,dlsyn [syn>0]",
+  "k": 2,
+  "calibration_fit_and_eval_wall_seconds": 188.8,
+  "train_rows": 3750000,
+  "train_frames": 75000
+}

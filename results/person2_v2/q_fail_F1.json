@@ -1,0 +1,25 @@
+{
+  "method": "logistic",
+  "features": [
+    "log_r",
+    "dlog_k3"
+  ],
+  "coefficients": [
+    0.5390134978809279,
+    3.17710184439054
+  ],
+  "intercept": -0.5561824308450554,
+  "log_r_floor": -60.0,
+  "fit_split": "train",
+  "git_hash": "unknown",
+  "target": "final_failure",
+  "selected_k": 3,
+  "t_min_fit": 5,
+  "delta_definition": "log r_t - log r_{max(t-k,1)}",
+  "train_snrs": [
+    2.25,
+    2.5,
+    2.75
+  ],
+  "epsilon_note": "no clipping epsilon needed: log r from -expm1(-S) in float64"
+}

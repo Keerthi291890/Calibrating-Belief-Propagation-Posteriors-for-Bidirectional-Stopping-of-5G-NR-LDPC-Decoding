@@ -1,0 +1,21 @@
+{
+    "model": "logistic_regression",
+    "target": "final_failure",
+    "features": [
+        "log_residual",
+        "delta_log_residual_k1"
+    ],
+    "selected_k": 1,
+    "epsilon": 1e-12,
+    "coefficients": [
+        0.2780840975438504,
+        1.6595258949325729
+    ],
+    "intercept": -1.6411466815839093,
+    "train_snr_values": [
+        2.25,
+        2.5,
+        2.75
+    ],
+    "fit_split": "train"
+}

@@ -195,7 +195,7 @@ def dlog(log_r: np.ndarray, k: int) -> np.ndarray:
 
 def make_table(d: dict, ks=(1, 2, 3, 5, 10)) -> pd.DataFrame:
     n = len(d["frame_id"])
-    lr = np.maximum(d["log_r"], LOG_R_FLOOR)
+    lr = np.clip(d["log_r"], LOG_R_FLOOR, 0.0)
     tab = {
         "frame": np.repeat(np.arange(n), T),
         "snr": np.repeat(d["snr"], T),

@@ -116,12 +116,11 @@ temp/
 /models/
 *.ckpt
 *.model
-
 # ==========================================
 # EXPERIMENT OUTPUTS
 # ==========================================
 
-# Ignore generated plots and figures
+# Ignore generated experiment outputs by default
 /outputs/
 /results/
 /figures/
@@ -131,6 +130,15 @@ temp/
 *.svg
 *.pdf
 
+# Keep Person 2 final evidence for the paper/handover
+!/results/
+!/results/person2_v3/
+!/results/person2_v3/**
+!/results/person2_v3/*.png
+!/results/person2_v3/*.md
+!/results/person2_v3/*.csv
+!/results/person2_v3/*.json
+!/results/person2_v3/*.txt
 # ==========================================
 # OPERATING SYSTEM
 # ==========================================

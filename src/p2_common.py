@@ -174,3 +174,26 @@ def head_rows(d: dict, k: int, t_min: int, models: dict, n_boot=100, extra=None)
             row.update(extra or {})
             rows.append(row)
     return rows
+
+
+def find_n_edges(root: Path, arg=None) -> int:
+    """nnz of the decoder's pruned parity-check matrix (150 x 350). From --n-edges or generation_config.json."""
+    if arg:
+        return int(arg)
+    cfg = Path(root) / "generation_config.json"
+    if cfg.exists():
+        def walk(o):
+            if isinstance(o, dict):
+                for k, v in o.items():
+                    if isinstance(v, (int, float)) and ("nnz" in k.lower() or "n_edges" in k.lower() or k.lower() == "edges"):
+                        yield int(v)
+                    yield from walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    yield from walk(v)
+        found = list(walk(json.load(open(cfg, encoding="utf-8"))))
+        if found:
+            return found[0]
+    raise SystemExit("Need the number of edges of the decoder graph (nnz of decoder._pcm, shape 150x350). "
+                     "Ask Person 1 to run: python -c \"print(dec._pcm.nnz)\" in the generation environment, "
+                     "then pass --n-edges N.")

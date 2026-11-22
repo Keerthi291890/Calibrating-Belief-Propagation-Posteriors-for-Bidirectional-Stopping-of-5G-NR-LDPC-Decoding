@@ -22,11 +22,17 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--data-root", default=None)
 ap.add_argument("--out-dir", default=str(pc.REPO / "results" / "person2_v3"))
 ap.add_argument("--snrs", default="2.00,2.25,2.50,2.75")
+ap.add_argument("--n-edges", default=None, help="nnz of decoder._pcm (150x350)")
+ap.add_argument("--n-vn", type=int, default=350)
+ap.add_argument("--n-checks", type=int, default=150)
+ap.add_argument("--cx", type=int, default=ps.CX_DEFAULT, help="cost of one transcendental op")
 a = ap.parse_args()
 SNRS = [float(s) for s in a.snrs.split(",")]
 OUT = Path(a.out_dir); root = pc.find_root(a.data_root)
 pd.set_option("display.width", 230, "display.max_columns", 30)
 rm = RiskModel(OUT); T = cl.T; TM = rm.t_min
+cm = ps.make_cost_model(rm, pc.find_n_edges(root, a.n_edges), a.n_checks, a.n_vn, a.cx)
+print("cost model:", {k: v for k, v in cm.items()})
 
 tr_d = pc.load_group(root, "train", SNRS)
 va_d = pc.load_group(root, "validation", SNRS)
@@ -73,21 +79,25 @@ ctx = ps.make_ctx(va_d, rm.k, TM, rm.q_now_cal, rm.q_fail_cal)
 rows = []
 for s in SNRS:
     idx = np.nonzero(va_d["snr"] == s)[0]
-    res = ps.tune(ps.sub(ctx, idx))
-    base = res[0.10]["B2 syndrome-zero"]["mean_it"]
+    res = ps.tune(ps.sub(ctx, idx), cm=cm)
+    base = res[0.10]["B2 syndrome-zero"]["mean_it"]; base_ops = res[0.10]["B2 syndrome-zero"]["total_ops"]
     for rho, d in res.items():
         for rule, r in d.items():
             rows.append({"snr": s, "rho": rho, "rule": rule, "params": str(r["params"]), "budget_met": r["feasible"],
                          "failing_frames": int(ctx["ff"][idx].sum()), "budget_events": round(r["budget_events"], 1),
                          **{k: v for k, v in r.items() if k not in ("params", "feasible", "budget_events")},
-                         "saving_vs_B2_pct": 100 * (1 - r["mean_it"] / base)})
+                         "saving_vs_B2_pct": 100 * (1 - r["mean_it"] / base),
+                         "total_ops_saving_vs_B2_pct": 100 * (1 - r["total_ops"] / base_ops),
+                         "score_ops_pct_of_bp": 100 * r["score_ops"] / r["bp_ops"]})
 R = pd.DataFrame(rows); R.to_csv(OUT / "stop_preview_val.csv", index=False)
-cols = ["rule", "params", "budget_met", "mean_it", "p95_it", "p99_it", "false_accept", "false_abandon", "excess_events",
-        "undetected_per_1000", "net_bler_change", "saving_vs_B2_pct"]
+cols = ["rule", "params", "budget_met", "mean_it", "p95_it", "false_accept", "false_abandon", "excess_events",
+        "undetected_given_accepted", "nack_rate", "net_bler_change", "saving_vs_B2_pct", "score_ops_pct_of_bp",
+        "total_ops_saving_vs_B2_pct"]
 for s in SNRS:
     for rho in (0.10, 0.20):
         r = R[(R.snr == s) & (R.rho == rho)]
-        print(f"\n--- {s:.2f} dB, rho={rho:.0%}: {r.failing_frames.iloc[0]} failing frames, budget {r.budget_events.iloc[0]} excess events ---")
+        frag = "  ** FRAGILE: budget < %d events **" % ps.FRAGILE_BUDGET_EVENTS if r.budget_events.iloc[0] < ps.FRAGILE_BUDGET_EVENTS else ""
+        print(f"\n--- {s:.2f} dB, rho={rho:.0%}: {r.failing_frames.iloc[0]} failing frames, budget {r.budget_events.iloc[0]} excess events{frag} ---")
         print(r[cols].round(3).to_string(index=False))
 print("\nbudget_met=False means NO threshold of that rule met the budget: ignore its iteration numbers.")
 print("In-sample (thresholds tuned on the same validation frames). 5% budget rows are in stop_preview_val.csv.")

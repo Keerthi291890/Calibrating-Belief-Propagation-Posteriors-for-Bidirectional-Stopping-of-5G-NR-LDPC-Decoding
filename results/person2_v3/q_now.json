@@ -1,0 +1,29 @@
+{
+  "method": "logistic",
+  "features": [
+    "log_r",
+    "S",
+    "lsyn",
+    "min_abs"
+  ],
+  "coefficients": [
+    -0.7019049735090863,
+    0.12297385096511257,
+    2.8873972023573624,
+    -1.1902561252691568
+  ],
+  "intercept": -3.5864688662456805,
+  "log_r_floor": -60.0,
+  "fit_split": "train",
+  "git_hash": "71e9299",
+  "target": "cur_err",
+  "model_name": "M6c +lsyn,min_abs [syn>0]",
+  "fit_region": "syn>0",
+  "train_snrs": [
+    2.0,
+    2.25,
+    2.5,
+    2.75
+  ],
+  "t_min": 5
+}
