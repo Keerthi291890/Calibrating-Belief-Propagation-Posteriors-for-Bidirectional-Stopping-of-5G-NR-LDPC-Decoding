@@ -1,0 +1,10 @@
+check,pass
+P-cal both saves 12.6/5.8/3.3/1.7% vs B2 at rho 10%,True
+B5 saves 9.1/3.4/1.0/0.9% vs B2 at rho 10%,True
+P-cal both over budget in 2 of 12 test cells,True
+B5 over budget in 5 of 12 test cells,True
+P-cal both matched: 6 of 18 delta!=0 cells over budget,True
+... all 6 have delta < 0,True
+P-cal both refit: 6 of 6 within budget,True
+P-cal both loses to B5 in total ops (cx=10) in all rho 10% cells,True
+abandon-only >= 80% of P-cal both saving at rho 10%,True
